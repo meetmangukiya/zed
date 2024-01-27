@@ -26,6 +26,7 @@ mod php;
 mod python;
 mod ruby;
 mod rust;
+mod solidity;
 mod svelte;
 mod tailwind;
 mod typescript;
@@ -266,7 +267,13 @@ pub fn init(
         tree_sitter_nu::language(),
         vec![Arc::new(nu::NuLanguageServer {})],
     );
-    language("solidity", tree_sitter_solidity::language(), vec![]);
+    language(
+        "solidity",
+        tree_sitter_solidity::language(),
+        vec![Arc::new(solidity::SolidityLspAdapter::new(
+            node_runtime.clone(),
+        ))],
+    );
     language(
         "vue",
         tree_sitter_vue::language(),
